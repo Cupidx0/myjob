@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animateslideIn {
+  animation: slideIn 0.4s ease-out forwards;
+}
+@keyframes slideLeft {
+    from {
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+.animateLeft {
+    animation: slideLeft 0.4s ease-out forwards;
+}
+.firstimage{
+    border: 1px solid  #0a0a0a;
+    border-radius: 8px;
+}
+img{
+    max-width: 300px;
+}
+.Card {
+    display: flex;
+    border: 1px solid #98989e;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    overflow: scroll;
+    margin-bottom: 5px;
+    max-width: 400px;
+    max-height:500px ;
+    cursor: grab;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    background-color: #000000;
+    border-radius: 8px;
+}
+.noImage{
+    display: flex;
+    border: 1px solid #98989e;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1em;
+    margin-bottom: 10%;
+    max-width: 400px;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+}
+.container {
+    display: flex;
+    place-items: center;
+    margin-top: 60px;
+    max-width: 320px;
+    align-items: center;
+    margin: auto;
+    justify-content: center !important;
+}
+.swipeLeft {
+    transform: translateX(-600px) rotate(-20deg);
+    transition: transform 0.3s ease;
+    opacity: 0.2;
+    background-color: hsl(84, 95%, 22%);
+  }
+  .swipeRight {
+    transform: translateX(600px) rotate(10deg);
+    transition: transform 0.3s ease;
+    opacity: 0.4;
+    background-color: red;
+  }
+  
