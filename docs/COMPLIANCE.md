@@ -10,9 +10,18 @@ Legal text lives in `src/pages/LegalPages.jsx`. Names, email and policy version 
 
 ## 1. Before going live
 
-- [ ] Set `contactEmail` in `src/legal/config.js` to a real inbox you check at least weekly.
+Sign-ups are currently closed (`signupsOpen: false` in `src/legal/config.js`) because the ICO fee
+is not paid yet. While closed, only your own account exists, so no fee is due. To be thorough, also
+block account creation at the source: Firebase console > Authentication > Settings > User actions >
+untick "Enable create (sign-up)". This may ask you to upgrade to Identity Platform, which is free at
+this size. Otherwise someone could still create an account by calling Firebase directly.
+
+To open sign-ups: pay the ICO fee, set `icoRegistration`, re-tick "Enable create (sign-up)", then set
+`signupsOpen: true`.
+
+- [x] Set `contactEmail` in `src/legal/config.js` (godwintestacct@gmail.com). Check it at least weekly.
 - [ ] Take the ICO fee self-assessment: https://ico.org.uk/for-organisations/data-protection-fee/self-assessment/
-      If it says you must pay (£40 a year for a micro organisation), pay it and put the number in `icoRegistration`.
+      If it says you must pay (Tier 1, £52 a year or £47 by direct debit), pay it and put the number in `icoRegistration`.
       Not paying when required can lead to a fine of up to £4,350.
 - [ ] Accept Google's data processing terms: in the Firebase console open Project settings and find the
       "Data Processing Terms" section (wording varies). This is your processor contract with Google (UK GDPR Article 28).

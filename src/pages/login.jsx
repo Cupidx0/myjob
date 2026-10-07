@@ -7,6 +7,7 @@ import { FaGithub } from "react-icons/fa";
 import { signInWithEmailAndPassword,GoogleAuthProvider,GithubAuthProvider,signInWithPopup,sendPasswordResetEmail } from "firebase/auth";
 //import { auth } from "./firebase";
 //import { createUserWithEmailAndPassword } from "firebase/auth";
+import { rejectNewAccountIfClosed, SIGNUPS_CLOSED_MSG } from "../legal/signups.js";
 import '../index.css';
 //import { useState } from "react";
 export const Login = ()=> {
@@ -41,8 +42,11 @@ export const Login = ()=> {
   const googleUp = async()=>{
     const provider = new GoogleAuthProvider();
     try{
-      await signInWithPopup(auth,provider);
-      //console.log('user logged in :',userGoogleCredential.user);
+      const result = await signInWithPopup(auth,provider);
+      if (await rejectNewAccountIfClosed(result)) {
+        toast.info(SIGNUPS_CLOSED_MSG);
+        return;
+      }
       toast.success('login successful');
       navigate(redirectTo, { replace: true });
     }catch(err){
@@ -53,8 +57,11 @@ export const Login = ()=> {
   const githubUp = async()=>{
     const githubProvider = new GithubAuthProvider();
     try{
-      await signInWithPopup(auth,githubProvider);
-      //console.log('user logged in :',userGithubCredential.user);
+      const result = await signInWithPopup(auth,githubProvider);
+      if (await rejectNewAccountIfClosed(result)) {
+        toast.info(SIGNUPS_CLOSED_MSG);
+        return;
+      }
       toast.success('login successful');
       navigate(redirectTo, { replace: true });
     }catch(err){

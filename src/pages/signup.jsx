@@ -105,6 +105,20 @@ export const SignUp =()=>{
         }
       }
     }
+    if (!LEGAL.signupsOpen) {
+      return (
+        <div className="mx-auto w-full max-w-md">
+          <div className="glass p-8 text-center">
+            <h2 className="text-2xl font-bold tracking-tight text-ink">Sign-ups are closed</h2>
+            <p className="mt-2 text-sm text-muted">Job Swipr isn't taking new accounts right now. Please check back later.</p>
+            <p className="mt-6 text-sm text-muted">
+              Already have an account?{' '}
+              <Link to="/login" className="font-medium text-brand hover:text-brand-hover">Log In</Link>
+            </p>
+          </div>
+        </div>
+      );
+    }
     return(
         <div className="mx-auto w-full max-w-md">
         <div className="glass p-8 text-ink">

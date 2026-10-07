@@ -7,7 +7,7 @@ export const LEGAL = {
   ownerCountry: "the United Kingdom",
 
   // One public inbox for support, data requests and complaints. Must be real and monitored.
-  contactEmail: "[YOUR CONTACT EMAIL]",
+  contactEmail: "godwintestacct@gmail.com",
 
   // ICO data protection fee registration number (ico.org.uk/fee). Leave empty
   // if the ICO self-assessment says you are exempt.
@@ -19,4 +19,8 @@ export const LEGAL = {
   effectiveDate: "7 October 2026",
 
   minimumAge: 16,
+
+  // false = nobody new can create an account (existing accounts still sign in).
+  // Keep it false until the ICO fee is paid, so no other people's data is stored.
+  signupsOpen: false,
 };
