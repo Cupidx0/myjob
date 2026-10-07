@@ -37,14 +37,14 @@
   gap: 0.75rem;
   padding: 2.5rem 1.5rem;
   width: 100%;
-  border: 1px dashed rgb(255 255 255 / 0.15);
+  border: 1px dashed var(--color-line-strong);
   border-radius: 1.25rem;
-  background-color: rgb(255 255 255 / 0.03);
+  background-color: var(--color-surface);
 }
 
 .notification {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: var(--color-muted);
 }
 
 .container {
@@ -59,12 +59,12 @@
   transform: translateX(-600px) rotate(-18deg);
   transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0;
-  box-shadow: 0 0 0 2px rgb(16 185 129 / 0.8), 0 0 60px rgb(16 185 129 / 0.35);
+  box-shadow: 0 0 0 2px #059669;
 }
 
 .swipeRight {
   transform: translateX(600px) rotate(12deg);
   transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0;
-  box-shadow: 0 0 0 2px rgb(244 63 94 / 0.8), 0 0 60px rgb(244 63 94 / 0.35);
+  box-shadow: 0 0 0 2px #e11d48;
 }

@@ -179,11 +179,11 @@ function First() {
     <div className="relative">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Discover <span className="gradient-text">jobs</span></h1>
-          <p className="mt-1 text-sm text-slate-400">Swipe left to apply, swipe right to pass.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">Discover <span className="text-brand">jobs</span></h1>
+          <p className="mt-1 text-sm text-muted">Swipe left to apply, swipe right to pass.</p>
         </div>
         <div
-          className={`flex cursor-pointer select-none items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${showFilter ? 'border-indigo-400/50 bg-indigo-500/15 text-indigo-200' : 'border-white/10 bg-white/[0.04] text-slate-200 hover:bg-white/[0.08]'}`}
+          className={`flex cursor-pointer select-none items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${showFilter ? 'border-brand/30 bg-brand-soft text-brand' : 'border-line bg-surface text-ink hover:bg-canvas'}`}
           ref = {navRef}
           onClick={filterjob}
         >
@@ -203,7 +203,7 @@ function First() {
     <div className={styles.container} id="content">
       {newCard ?(
         <div className="w-full">
-        <div ref={cardRef} className={`relative w-full cursor-grab rounded-2xl border border-white/10 bg-[#121522] shadow-2xl shadow-black/40 select-none overflow-hidden transition-transform duration-300 ease-in-out active:cursor-grabbing
+        <div ref={cardRef} className={`relative w-full cursor-grab rounded-2xl border border-line bg-surface shadow-md select-none overflow-hidden transition-transform duration-300 ease-in-out active:cursor-grabbing
           ${swipeDirection === "left" ? styles.swipeLeft: swipeDirection === "right" ? styles.swipeRight : ""}
         `}
             onTouchStart={handleTouchStart}
@@ -211,71 +211,71 @@ function First() {
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             >
-            <div className="h-1.5 w-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500"/>
+            <div className="h-1 w-full bg-brand"/>
             <div className="first-content p-6">
                 <div className="flex items-start gap-4">
-                  <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-indigo-500/30 to-violet-500/30 text-lg font-bold uppercase text-indigo-100 ring-1 ring-white/10">
+                  <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-brand-soft text-lg font-bold uppercase text-brand ring-1 ring-line">
                     {newCard.company ? newCard.company[0] : '?'}
                   </div>
                   <div className="min-w-0">
-                    <h2 className='text-xl font-bold leading-snug text-white'>{newCard.title ? newCard.title : "swipe left or right"}</h2>
-                    <h3 className='mt-0.5 truncate text-sm font-medium text-indigo-300'>{newCard.company}</h3>
+                    <h2 className='text-xl font-bold leading-snug text-ink'>{newCard.title ? newCard.title : "swipe left or right"}</h2>
+                    <h3 className='mt-0.5 truncate text-sm font-medium text-brand'>{newCard.company}</h3>
                   </div>
                 </div>
                 <dl className="mt-6 grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
-                  <div className="flex items-center gap-2.5 rounded-xl bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/[0.06]">
-                    <HiOutlineLocationMarker className="shrink-0 text-slate-400" size={18}/>
-                    <span className="truncate text-slate-200">{newCard.location}</span>
+                  <div className="flex items-center gap-2.5 rounded-xl bg-canvas px-3 py-2.5 ring-1 ring-line">
+                    <HiOutlineLocationMarker className="shrink-0 text-muted" size={18}/>
+                    <span className="truncate text-ink">{newCard.location}</span>
                   </div>
-                  <div className="flex items-center gap-2.5 rounded-xl bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/[0.06]">
-                    <HiOutlineCash className="shrink-0 text-emerald-400" size={18}/>
-                    <span className="truncate text-slate-200">{salary}</span>
+                  <div className="flex items-center gap-2.5 rounded-xl bg-canvas px-3 py-2.5 ring-1 ring-line">
+                    <HiOutlineCash className="shrink-0 text-emerald-600" size={18}/>
+                    <span className="truncate text-ink">{salary}</span>
                   </div>
-                  <div className="flex items-center gap-2.5 rounded-xl bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/[0.06]">
-                    <HiOutlineClock className="shrink-0 text-slate-400" size={18}/>
-                    <span className="capitalize text-slate-200">{pretty(newCard.contractTime)}</span>
+                  <div className="flex items-center gap-2.5 rounded-xl bg-canvas px-3 py-2.5 ring-1 ring-line">
+                    <HiOutlineClock className="shrink-0 text-muted" size={18}/>
+                    <span className="capitalize text-ink">{pretty(newCard.contractTime)}</span>
                   </div>
-                  <div className="flex items-center gap-2.5 rounded-xl bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/[0.06]">
-                    <HiOutlineDocumentText className="shrink-0 text-slate-400" size={18}/>
-                    <span className="capitalize text-slate-200">{pretty(newCard.contractType)}</span>
+                  <div className="flex items-center gap-2.5 rounded-xl bg-canvas px-3 py-2.5 ring-1 ring-line">
+                    <HiOutlineDocumentText className="shrink-0 text-muted" size={18}/>
+                    <span className="capitalize text-ink">{pretty(newCard.contractType)}</span>
                   </div>
                 </dl>
-                <p className="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                <p className="mt-4 flex items-center gap-2 text-xs text-subtle">
                   <HiOutlineCalendar size={14}/> Posted {newCard.date}
-                  {cards && <span className="ml-auto rounded-full bg-white/[0.05] px-2 py-0.5 text-slate-400">{cardIndex + 1} / {cards.length}</span>}
+                  {cards && <span className="ml-auto rounded-full bg-surface px-2 py-0.5 text-muted">{cardIndex + 1} / {cards.length}</span>}
                 </p>
                 <button className="btn-secondary mt-5" onClick={about}>About job</button>
             </div>
             {showJobInfo&&(
                   <>
-                   <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={close}/>
-                   <div className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[75vh] w-full max-w-2xl cursor-auto overflow-auto rounded-t-3xl border border-white/10 bg-[#131624] p-6 shadow-2xl ${styles.animateslideIn}`}>
-                    <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-white/15"/>
+                   <div className="fixed inset-0 z-40 bg-ink/40" onClick={close}/>
+                   <div className={`fixed inset-x-0 bottom-0 z-50 mx-auto max-h-[75vh] w-full max-w-2xl cursor-auto overflow-auto rounded-t-3xl border border-line bg-surface p-6 shadow-2xl ${styles.animateslideIn}`}>
+                    <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-line"/>
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="text-lg font-bold text-white">{newCard.title}</h3>
-                        <p className="text-sm text-indigo-300">{newCard.company}</p>
+                        <h3 className="text-lg font-bold text-ink">{newCard.title}</h3>
+                        <p className="text-sm text-brand">{newCard.company}</p>
                       </div>
-                      <button className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white/[0.06] text-slate-300 transition hover:bg-rose-500/20 hover:text-rose-300" onClick={close} aria-label="Close">
+                      <button className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-canvas text-ink-soft transition hover:bg-rose-100 hover:text-rose-700" onClick={close} aria-label="Close">
                         <HiX size={20}/>
                       </button>
                     </div>
-                    <div className="mt-5 rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
+                    <div className="mt-5 rounded-xl border border-line bg-canvas p-4">
                         <details className="cursor-pointer">
-                          <summary className="font-medium text-indigo-300">Get to job through link</summary>
+                          <summary className="font-medium text-brand">Get to job through link</summary>
                           <a
                             href={newCard.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-2 flex items-center gap-1.5 break-all text-sm text-indigo-400 hover:text-indigo-300"
+                            className="mt-2 flex items-center gap-1.5 break-all text-sm text-brand hover:text-brand-hover"
                           >
                             <HiExternalLink className="shrink-0"/>{newCard.link}
                           </a>
                         </details>
                     </div>
                     <div className="mt-4">
-                      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">Description</h4>
-                      <p className="text-sm leading-relaxed text-slate-300">{newCard.description}</p>
+                      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-subtle">Description</h4>
+                      <p className="text-sm leading-relaxed text-ink-soft">{newCard.description}</p>
                     </div>
                   </div>
                 </>
@@ -287,28 +287,28 @@ function First() {
             type="button"
             onClick={()=>swipeWithButton('left')}
             disabled={!!swipeDirection}
-            className="flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-500/20 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 disabled:opacity-50"
           ><HiArrowLeft/><HiCheck size={16}/> Apply</button>
           <button
             type="button"
             onClick={()=>swipeWithButton('right')}
             disabled={!!swipeDirection}
-            className="flex items-center justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm font-semibold text-rose-300 transition hover:bg-rose-500/20 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 disabled:opacity-50"
           >Pass <HiX size={16}/><HiArrowRight/></button>
         </div>
-        <p className="mt-3 text-center text-xs text-slate-500">Or drag the card left to apply, right to pass</p>
+        <p className="mt-3 text-center text-xs text-subtle">Or drag the card left to apply, right to pass</p>
         </div>
       ):(
            <div className={styles.noImage}>
              {cards === null || loadingMore ? (
                <>
-                 <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-400/30 border-t-indigo-400"/>
-                 <p className="text-sm text-slate-400">{loadingMore ? 'Loading more jobs…' : 'Loading jobs…'}</p>
+                 <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand/30 border-t-brand"/>
+                 <p className="text-sm text-muted">{loadingMore ? 'Loading more jobs…' : 'Loading jobs…'}</p>
                </>
              ) : (
                <>
-                 <p className="text-lg font-semibold text-white">You're all caught up</p>
-                 <p className="text-sm text-slate-400">Try different filters to find more jobs.</p>
+                 <p className="text-lg font-semibold text-ink">You're all caught up</p>
+                 <p className="text-sm text-muted">Try different filters to find more jobs.</p>
                </>
              )}
              {notification && !loadingMore && cards !== null && (
@@ -322,11 +322,11 @@ function First() {
     </div>
     ) : (
       <div className="glass mx-auto max-w-lg p-10 text-center">
-        <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 text-white shadow-lg shadow-indigo-500/30">
+        <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-brand text-white">
           <HiFilter size={26}/>
         </div>
-        <h2 className="text-2xl font-bold text-white">Find your next role, one swipe at a time</h2>
-        <p className='mt-2 text-sm text-slate-400'>Please <Link to ='/login' className="font-medium text-indigo-300 hover:text-indigo-200">sign in</Link> to view jobs</p>
+        <h2 className="text-2xl font-bold text-ink">Find your next role, one swipe at a time</h2>
+        <p className='mt-2 text-sm text-muted'>Please <Link to ='/login' className="font-medium text-brand hover:text-brand-hover">sign in</Link> to view jobs</p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Link to="/login" className="btn-primary">Sign in</Link>
           <Link to="/signup" className="btn-secondary">Create account</Link>

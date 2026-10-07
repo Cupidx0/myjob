@@ -87,10 +87,10 @@ export const SignUp =()=>{
     }
     return(
         <div className="mx-auto w-full max-w-md">
-        <div className="glass p-8 text-white">
+        <div className="glass p-8 text-ink">
       <div className="mb-8 text-center">
         <h2 className="text-2xl font-bold tracking-tight">Create An Account</h2>
-        <p className="mt-1 text-sm text-slate-400">Start swiping and tracking applications in minutes.</p>
+        <p className="mt-1 text-sm text-muted">Start swiping and tracking applications in minutes.</p>
       </div>
       <form  className="space-y-4 bg-transparent" onSubmit={handleSignup}>
         <div className="grid grid-cols-2 gap-3">
@@ -150,7 +150,7 @@ export const SignUp =()=>{
             className="field-input"
           />
         </div>
-        {error && <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-sm text-rose-300">{error}</p>}
+        {error && <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p>}
         <div className='space-y-3 pt-2 text-center'>
           <button
             type="submit"
@@ -158,8 +158,8 @@ export const SignUp =()=>{
           >
             Sign Up
           </button>
-          <div className="flex items-center gap-3 py-1 text-xs uppercase tracking-wider text-slate-500">
-            <span className="h-px flex-1 bg-white/10"/>or<span className="h-px flex-1 bg-white/10"/>
+          <div className="flex items-center gap-3 py-1 text-xs uppercase tracking-wider text-subtle">
+            <span className="h-px flex-1 bg-line"/>or<span className="h-px flex-1 bg-line"/>
           </div>
           <button 
             type="button"
@@ -171,9 +171,9 @@ export const SignUp =()=>{
           onClick={githubUp}
           className="btn-secondary"
           ><FaGithub size={20}/>Sign In With Github</button>
-          <p className="pt-2 text-sm text-center text-slate-400">
+          <p className="pt-2 text-sm text-center text-muted">
           Already have an account?{' '}
-          <Link to ="/login" className="font-medium text-indigo-300 hover:text-indigo-200">
+          <Link to ="/login" className="font-medium text-brand hover:text-brand-hover">
             Log In
           </Link>
         </p>

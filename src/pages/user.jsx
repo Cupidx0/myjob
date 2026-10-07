@@ -99,17 +99,17 @@ export const UserDetails = () => {
     return (
         <>
             <div className="mb-8">
-                <h2 className="text-3xl font-bold tracking-tight text-white">Profile</h2> {/* Capitalized 'Profile' */}
-                <p className="mt-1 text-sm text-slate-400">View and update your profile details here.</p> {/* More descriptive */}
+                <h2 className="text-3xl font-bold tracking-tight text-ink">Profile</h2> {/* Capitalized 'Profile' */}
+                <p className="mt-1 text-sm text-muted">View and update your profile details here.</p> {/* More descriptive */}
             </div>
             <div className="grid gap-5 md:grid-cols-[minmax(0,320px)_minmax(0,1fr)]">
                 <section className="glass flex flex-col items-center p-6 text-center">
-                    <div className="mb-4 grid h-20 w-20 place-items-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 text-3xl font-bold uppercase text-white shadow-lg shadow-indigo-500/30">
+                    <div className="mb-4 grid h-20 w-20 place-items-center rounded-full bg-brand text-3xl font-bold uppercase text-white">
                         {(user?.displayName || user?.email || '?')[0]}
                     </div>
-                    {user?.displayName && <p className="text-lg font-semibold text-white">{user.displayName}</p>}
-                    <h3 className={`max-w-full break-all ${user?.displayName ? 'text-sm text-slate-400' : 'font-semibold text-white'}`}>{user ? user.email : 'Not logged in'}</h3> {/* Capitalized 'Not logged in' */}
-                    {userStatus && <p className="mt-1 text-sm text-slate-400">{userStatus}</p>}
+                    {user?.displayName && <p className="text-lg font-semibold text-ink">{user.displayName}</p>}
+                    <h3 className={`max-w-full break-all ${user?.displayName ? 'text-sm text-muted' : 'font-semibold text-ink'}`}>{user ? user.email : 'Not logged in'}</h3> {/* Capitalized 'Not logged in' */}
+                    {userStatus && <p className="mt-1 text-sm text-muted">{userStatus}</p>}
                     {/* Only show reset password if user is logged in */}
                     {user && (
                         <button
@@ -132,13 +132,13 @@ export const UserDetails = () => {
                     )}
                 </section>
                 <section className="glass p-6">
-                    <h4 className="text-lg font-semibold text-white">Your Status</h4> {/* Clearer heading */}
-                    <p className="text-sm text-slate-400">Let people know what you're looking for.</p>
+                    <h4 className="text-lg font-semibold text-ink">Your Status</h4> {/* Clearer heading */}
+                    <p className="text-sm text-muted">Let people know what you're looking for.</p>
                     <article className="mt-5 flex flex-col">
                         {user ? (
                             <>
                                 {/* Display fetched status if available */}
-                                <p className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-slate-300">{userStatus ? `Status: ${userStatus}` : 'No status set yet.'}</p>
+                                <p className="rounded-xl border border-line bg-canvas px-4 py-3 text-sm text-ink-soft">{userStatus ? `Status: ${userStatus}` : 'No status set yet.'}</p>
 
                                 {/* Form to update status */}
                                 <form onSubmit={saveUserStatus} className="mt-4 flex gap-2">
@@ -161,7 +161,7 @@ export const UserDetails = () => {
                                 </form>
                             </>
                         ) : (
-                            <p className="text-sm text-slate-400">Log in to set your status.</p> // Message when not logged in
+                            <p className="text-sm text-muted">Log in to set your status.</p> // Message when not logged in
                         )}
                     </article>
                 </section>

@@ -7,9 +7,9 @@ const CONTACT_EMAIL = "support@example.com";
 function InfoPage({ title, intro, children }) {
   return (
     <article className="mx-auto max-w-3xl">
-      <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h1>
-      {intro && <p className="mt-2 text-slate-400">{intro}</p>}
-      <div className="glass mt-8 space-y-6 p-6 text-sm leading-relaxed text-slate-300 sm:p-8 [&_h2]:mb-2 [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-white">
+      <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{title}</h1>
+      {intro && <p className="mt-2 text-muted">{intro}</p>}
+      <div className="glass mt-8 space-y-6 p-6 text-sm leading-relaxed text-ink-soft sm:p-8 [&_h2]:mb-2 [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-ink">
         {children}
       </div>
     </article>
@@ -27,7 +27,7 @@ export function About() {
         <h2>How it works</h2>
         <p>Listings come from the Adzuna jobs API. Jobs you apply to are saved to your account so you can follow each application from "Applied" through to an offer.</p>
       </section>
-      <p><Link to="/signup" className="font-medium text-indigo-300 hover:text-indigo-200">Create an account</Link> to get started.</p>
+      <p><Link to="/signup" className="font-medium text-brand hover:text-brand-hover">Create an account</Link> to get started.</p>
     </InfoPage>
   );
 }
@@ -37,11 +37,11 @@ export function Contact() {
     <InfoPage title="Contact" intro="Questions, feedback or a bug to report? Get in touch.">
       <section>
         <h2>Email</h2>
-        <p><a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-indigo-300 hover:text-indigo-200">{CONTACT_EMAIL}</a></p>
+        <p><a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-brand hover:text-brand-hover">{CONTACT_EMAIL}</a></p>
       </section>
       <section>
         <h2>Account help</h2>
-        <p>Forgotten your password? Use the "Forgot password?" link on the <Link to="/login" className="font-medium text-indigo-300 hover:text-indigo-200">login page</Link>.</p>
+        <p>Forgotten your password? Use the "Forgot password?" link on the <Link to="/login" className="font-medium text-brand hover:text-brand-hover">login page</Link>.</p>
       </section>
     </InfoPage>
   );
@@ -64,7 +64,7 @@ export function Privacy() {
       </section>
       <section>
         <h2>Deleting your data</h2>
-        <p>You can remove saved jobs at any time from Applied Jobs. To delete your account, contact <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-indigo-300 hover:text-indigo-200">{CONTACT_EMAIL}</a>.</p>
+        <p>You can remove saved jobs at any time from Applied Jobs. To delete your account, contact <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-brand hover:text-brand-hover">{CONTACT_EMAIL}</a>.</p>
       </section>
     </InfoPage>
   );
@@ -97,8 +97,8 @@ export function FAQ() {
   return (
     <InfoPage title="FAQ" intro="Quick answers to common questions.">
       {faqs.map(([q, a]) => (
-        <details key={q} className="group border-b border-white/[0.06] pb-4 last:border-0 last:pb-0">
-          <summary className="cursor-pointer list-none font-semibold text-white">{q}</summary>
+        <details key={q} className="group border-b border-line pb-4 last:border-0 last:pb-0">
+          <summary className="cursor-pointer list-none font-semibold text-ink">{q}</summary>
           <p className="mt-2">{a}</p>
         </details>
       ))}

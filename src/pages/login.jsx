@@ -81,8 +81,8 @@ export const Login = ()=> {
     <div className="mx-auto w-full max-w-md">
     <div className="glass p-8">
       <div className="mb-8 text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-white">Welcome back</h1>
-        <p className="mt-1 text-sm text-slate-400">Log in to keep swiping on your next role.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-ink">Welcome back</h1>
+        <p className="mt-1 text-sm text-muted">Log in to keep swiping on your next role.</p>
       </div>
       <form className="space-y-4" onSubmit={handleLogin}>
         <label className="block">
@@ -97,8 +97,8 @@ export const Login = ()=> {
         </label>
         <label className="block">
           <span className="mb-1.5 flex items-center justify-between">
-            <span className="text-sm font-medium text-slate-300">Password</span>
-            <button type="button" onClick={forgotPassword} className="text-xs font-medium text-indigo-300 hover:text-indigo-200">Forgot password?</button>
+            <span className="text-sm font-medium text-ink-soft">Password</span>
+            <button type="button" onClick={forgotPassword} className="text-xs font-medium text-brand hover:text-brand-hover">Forgot password?</button>
           </span>
           <input type="password"
            name="password"
@@ -108,14 +108,14 @@ export const Login = ()=> {
            className="field-input"
             />
         </label>
-        {error && <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-sm text-rose-300">{error}</p>}
+        {error && <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p>}
         <button 
             type="submit"
             className="btn-primary !mt-6">
             {/* <Link to="/home">*/}Login{/*</Link>*/}
         </button>
-        <div className="flex items-center gap-3 py-1 text-xs uppercase tracking-wider text-slate-500">
-          <span className="h-px flex-1 bg-white/10"/>or<span className="h-px flex-1 bg-white/10"/>
+        <div className="flex items-center gap-3 py-1 text-xs uppercase tracking-wider text-subtle">
+          <span className="h-px flex-1 bg-line"/>or<span className="h-px flex-1 bg-line"/>
         </div>
         <button 
           type="button"
@@ -127,9 +127,9 @@ export const Login = ()=> {
           onClick={githubUp}
           className="btn-secondary"
         ><FaGithub size={20}/>Sign In With Github</button>
-        <p className="pt-2 text-sm text-center text-slate-400">
+        <p className="pt-2 text-sm text-center text-muted">
           Don't have an account?{' '}
-          <Link to="/signup" className="font-medium text-indigo-300 hover:text-indigo-200">
+          <Link to="/signup" className="font-medium text-brand hover:text-brand-hover">
             Sign Up
           </Link>
         </p>

@@ -14,7 +14,7 @@ function Layout() {
           <ToastContainer
             autoClose={1500}
           draggable
-          theme='dark'
+          theme='light'
           />
           <Outlet/>
       </main>

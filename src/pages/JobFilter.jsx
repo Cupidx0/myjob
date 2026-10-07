@@ -27,10 +27,10 @@ function JobFilterForm({onFilter, initial = {}}){
       }
     };  
     return(
-        <div className="glass w-full !bg-[#131624]/95 p-5" >
+        <div className="glass w-full bg-surface p-5" >
                         <div className="mb-4">
-                          <h3 className="text-base font-semibold text-white">Filter jobs</h3>
-                          <p className="text-xs text-slate-400">Narrow down roles by title and location.</p>
+                          <h3 className="text-base font-semibold text-ink">Filter jobs</h3>
+                          <p className="text-xs text-muted">Narrow down roles by title and location.</p>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4" ref={navRef}>
                         <div>
@@ -71,7 +71,7 @@ function JobFilterForm({onFilter, initial = {}}){
                               id="contractType"
                               value={contractType}
                               onChange={(e) => setContractType(e.target.value)}
-                              className="field-input [&>option]:bg-[#131624]"
+                              className="field-input [&>option]:bg-surface"
                             >
                               <option value="">Any</option>
                               <option value="Full-Time">Full-Time</option>
@@ -116,7 +116,7 @@ function JobFilterForm({onFilter, initial = {}}){
                           </div>
 
                           {/* Error Message */}
-                          {error && <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-sm text-rose-300">{error}</p>}
+                          {error && <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p>}
 
                           {/* Submit Button */}
                           <div>
