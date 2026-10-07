@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 function Four(){
     return(
-        <div className="flex flex-col items-center justify-center gap-10 bg-black-100">
-            <h2 className="text-red-500">
-                <img src="https://www.1stopdesign.com/wp-content/uploads/2024/04/1_hFwwQAW45673VGKrMPE2qQ.png"></img>
-            </h2>
-            <button className="max-w-[180px] h-[43px] bg-black text-white rounded-md transition-transform hover:scale-105 hover:bg-black-300">
-                <Link to = "/home" className="w-full h-full block font-bold text-center">Go back home</Link>
-            </button>
+        <div className="flex flex-col items-center justify-center gap-6 py-20 text-center">
+            <h2 className="gradient-text text-8xl font-extrabold tracking-tighter sm:text-9xl">404</h2>
+            <div>
+                <p className="text-xl font-semibold text-white">Page not found</p>
+                <p className="mt-1 text-sm text-slate-400">The page you're looking for doesn't exist or has moved.</p>
+            </div>
+            <Link to = "/home" className="btn-primary !w-auto px-6">Go back home</Link>
         </div>
     )
 }

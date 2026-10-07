@@ -3,9 +3,11 @@ import '../index.css';
 import {toast} from 'react-toastify';
 //import { FaGoogle } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth} from '../utils/firebase';
-import { GoogleIcon,AppleIcon, FacebookIcon, SitemarkIcon } from '../components/customIcons';
-import { GoogleAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword,signInWithPopup} from 'firebase/auth';
+import { auth, db} from '../utils/firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { GoogleIcon } from '../components/customIcons';
+import { FaGithub } from 'react-icons/fa';
+import { GoogleAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword,signInWithPopup,updateProfile} from 'firebase/auth';
 export const SignUp =()=>{
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -23,11 +25,19 @@ export const SignUp =()=>{
       }else if(password != confirmPassword){
         setError("passwords does not match!");
         toast.error('passwords does not match!');
+        return;
       }
       setError("");
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("User created:", userCredential.user.email);
+        const newUser = userCredential.user;
+        // save the name; a failure here shouldn't undo the signup
+        try {
+          await updateProfile(newUser, { displayName: `${firstName} ${lastName}`.trim() });
+          await setDoc(doc(db, "users", newUser.uid), { firstName, lastName, email: newUser.email }, { merge: true });
+        } catch (profileErr) {
+          console.error("Error saving profile:", profileErr);
+        }
         toast.success("Signup successful!");
         navigate('/home');
       } catch (err) {
@@ -38,8 +48,7 @@ export const SignUp =()=>{
     const googleUp = async()=>{
       const provider = new GoogleAuthProvider();
       try {
-        const userGoogleCredential = await signInWithPopup(auth,provider);
-        //console.log("User created:", userGoogleCredential.user);
+        await signInWithPopup(auth,provider);
         toast.success("Signup successful!");
         navigate('/home');
       } catch (err) {
@@ -50,8 +59,7 @@ export const SignUp =()=>{
     const githubUp = async()=>{
       const githubProvider = new GithubAuthProvider();
       try{
-        const userGithubCredential = await signInWithPopup(auth,githubProvider);
-        //console.log("user created :", userGithubCredential.user);
+        await signInWithPopup(auth,githubProvider);
         toast.success("Signup successful!");
         navigate('/home');
       }catch (error) {
@@ -60,7 +68,6 @@ export const SignUp =()=>{
         const errorMessage = error.message;
         // You might also get email or credential depending on the error
         const email = error.email; // For account-exists-with-different-credential
-        const credential = error.credential; // The GitHub credential for linking
     
         // Check if the error is the specific account-exists-with-different-credential error
         if (errorCode === 'auth/account-exists-with-different-credential') {
@@ -79,87 +86,100 @@ export const SignUp =()=>{
       }
     }
     return(
-        <div className="max-w-[300px] max-h-[500px] text-white mx-auto p-3 bg-black border border-gray-700 rounded-md shadow-md mb-6 mt-0 overflow-scroll">
-      <h2 className="text-xl text-center font-bold mb-4">Create An Account</h2>
-      <form  className="space-y mb-1 bg-transparent" onSubmit={handleSignup}>
+        <div className="mx-auto w-full max-w-md">
+        <div className="glass p-8 text-white">
+      <div className="mb-8 text-center">
+        <h2 className="text-2xl font-bold tracking-tight">Create An Account</h2>
+        <p className="mt-1 text-sm text-slate-400">Start swiping and tracking applications in minutes.</p>
+      </div>
+      <form  className="space-y-4 bg-transparent" onSubmit={handleSignup}>
+        <div className="grid grid-cols-2 gap-3">
         <div>
-          <label htmlFor='firstname' className="block text-sm font-medium">First Name</label>
+          <label htmlFor='firstname' className="field-label">First Name</label>
           <input
             type="text"
             name="firstname"
             placeholder="First Name"
             value = {firstName}
             onChange ={(e)=> setFirstName(e.target.value)}
-            className="mt-1 block w-full max-w-md border px-3 py-2 rounded-md bg-transparent text-white sm:max-w-sm"
+            className="field-input"
           />
         </div>
         <div>
-          <label htmlFor='lastname' className="block text-sm font-medium">Last Name</label>
+          <label htmlFor='lastname' className="field-label">Last Name</label>
           <input
             type="text"
             name="lastname"
             placeholder="Last Name"
             value = {lastName}
             onChange = {(e)=> setLastName(e.target.value)}
-            className="mt-1 block w-full border px-3 py-2 rounded-md bg-transparent text-white"
+            className="field-input"
           />
         </div>
+        </div>
         <div>
-          <label htmlFor='email' className="block text-sm font-medium">Email</label>
+          <label htmlFor='email' className="field-label">Email</label>
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="you@example.com"
             value = {email}
             onChange = {(e)=>setEmail(e.target.value)}
-            className="mt-1 block w-full border px-3 py-2 rounded-md bg-transparent text-white"
+            className="field-input"
           />
         </div>
         <div>
-          <label htmlFor='password' className="block text-sm font-medium">Password</label>
+          <label htmlFor='password' className="field-label">Password</label>
           <input
             type="password"
             name="password"
             placeholder="Password"
             value = {password}
             onChange = {(e)=>setPassword(e.target.value)}
-            className="mt-1 block w-full border px-3 py-2 rounded-md bg-transparent text-white"
+            className="field-input"
           />
-          <label htmlFor='confirmpassword' className="block text-sm font-medium">Confirm Password</label>
+        </div>
+        <div>
+          <label htmlFor='confirmpassword' className="field-label">Confirm Password</label>
           <input
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
             value = {confirmPassword}
             onChange = {(e)=>setConfirmPassword(e.target.value)}
-            className="mt-1 block w-full border px-3 py-2 mb-1 bg-transparent rounded-md text-white"
+            className="field-input"
           />
         </div>
-        {error && <p className="text-red-500">{error}</p>}
-        <div className='text-center max-w-sm'>
+        {error && <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-sm text-rose-300">{error}</p>}
+        <div className='space-y-3 pt-2 text-center'>
           <button
             type="submit"
-            className="w-full border border-gray-600 bg-green-600 text-white py-2 rounded-md hover:bg-blue-700"
+            className="btn-primary"
           >
             Sign Up
           </button>
-
+          <div className="flex items-center gap-3 py-1 text-xs uppercase tracking-wider text-slate-500">
+            <span className="h-px flex-1 bg-white/10"/>or<span className="h-px flex-1 bg-white/10"/>
+          </div>
           <button 
+            type="button"
             onClick={googleUp}
-            className="flex items-center justify-center w-full border border-gray-600 py-2 rounded-md hover:bg-gray-800"
+            className="btn-secondary"
             ><GoogleIcon className='mr-2'/>Sign In With Google</button>
           <button 
+          type="button"
           onClick={githubUp}
-          className="flex items-center justify-center w-full border border-gray-600 py-2 rounded-md hover:bg-gray-800"
-          ><AppleIcon className='mr-2'/>Sign In With Github</button>
-          <p className="mt-4 text-sm  text-center">
+          className="btn-secondary"
+          ><FaGithub size={20}/>Sign In With Github</button>
+          <p className="pt-2 text-sm text-center text-slate-400">
           Already have an account?{' '}
-          <Link to ="/login" className="text-blue-500 hover:underline">
+          <Link to ="/login" className="font-medium text-indigo-300 hover:text-indigo-200">
             Log In
           </Link>
         </p>
         </div>
       </form>
+    </div>
     </div>
     )
 }

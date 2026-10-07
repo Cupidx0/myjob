@@ -1,7 +1,11 @@
 node_modules/
+dist/
 .env
-.env.*.local.env
-.env
-.env
-.env
-.env
+.env.*
+!.env.example
+.vercel
+.firebase/
+functions/node_modules/
+functions/.env
+.DS_Store
+*.log

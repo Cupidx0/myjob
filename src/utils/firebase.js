@@ -1,14 +1,18 @@
 import {initializeApp} from 'firebase/app';
 import {getFirestore} from 'firebase/firestore';
 import{getAuth} from 'firebase/auth';
+// Values come from .env (see .env.example)
 const firebaseConfig = {
-    apiKey:"AIzaSyBpKs7mIyL4SMMfuWVUpt2CoWSvX3DSkFk",
-    authDomain: "my-app-9500a.firebaseapp.com",
-    projectId: "my-app-9500a",
-    storageBucket: "my-app-9500a.appspot.com",
-    messagingSenderId: "91957837937",
-    appId:"1:91957837937:web:9a8a6596b95900a75edbd0",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+    throw new Error("Missing Firebase config: copy .env.example to .env and fill in the VITE_FIREBASE_* values.");
+}
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export{db};

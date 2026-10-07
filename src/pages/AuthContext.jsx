@@ -8,18 +8,21 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  // true until Firebase reports the initial auth state
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setIsLoggedIn(!!firebaseUser);
       setUser(firebaseUser);
+      setAuthLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, authLoading }}>
       {children}
     </AuthContext.Provider>
   );

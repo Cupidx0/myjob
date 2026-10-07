@@ -10,13 +10,13 @@ function Layout() {
   return (
     <>
       <Header isOpen={isOpen} setIsOpen={setIsOpen} />
-      <main>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
           <ToastContainer
             autoClose={1500}
-          draggable 
+          draggable
           theme='dark'
           />
-          <Outlet/> 
+          <Outlet/>
       </main>
       <Footer />
     </>
