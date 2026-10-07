@@ -4,6 +4,7 @@ import Footer from './Footer.jsx';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Outlet } from 'react-router-dom';
+import ConsentGate from '../components/ConsentGate.jsx';
 import '../index.css';
 function Layout() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +20,7 @@ function Layout() {
           <Outlet/>
       </main>
       <Footer />
+      <ConsentGate />
     </>
   );
 }

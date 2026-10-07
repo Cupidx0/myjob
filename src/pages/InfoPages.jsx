@@ -1,15 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { LEGAL } from "../legal/config.js";
 
-// TODO: replace with your real support address.
-const CONTACT_EMAIL = "support@example.com";
+const CONTACT_EMAIL = LEGAL.contactEmail;
 
-function InfoPage({ title, intro, children }) {
+const prose = [
+  "[&_h2]:mb-2 [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-ink",
+  "[&_h3]:mb-1 [&_h3]:mt-4 [&_h3]:font-semibold [&_h3]:text-ink",
+  "[&_p+p]:mt-3 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5",
+  "[&_a]:font-medium [&_a]:text-brand [&_a]:underline [&_a:hover]:text-brand-hover",
+  "[&_table]:mt-3 [&_table]:w-full [&_table]:border-collapse [&_table]:text-left [&_table]:text-xs sm:[&_table]:text-sm",
+  "[&_th]:border-b [&_th]:border-line [&_th]:bg-canvas [&_th]:p-2 [&_th]:font-semibold [&_th]:text-ink",
+  "[&_td]:border-b [&_td]:border-line [&_td]:p-2 [&_td]:align-top",
+].join(" ");
+
+export function InfoPage({ title, intro, children }) {
   return (
     <article className="mx-auto max-w-3xl">
       <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{title}</h1>
       {intro && <p className="mt-2 text-muted">{intro}</p>}
-      <div className="glass mt-8 space-y-6 p-6 text-sm leading-relaxed text-ink-soft sm:p-8 [&_h2]:mb-2 [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-ink">
+      <div className={`glass mt-8 space-y-6 p-6 text-sm leading-relaxed text-ink-soft sm:p-8 ${prose}`}>
         {children}
       </div>
     </article>
@@ -43,43 +53,13 @@ export function Contact() {
         <h2>Account help</h2>
         <p>Forgotten your password? Use the "Forgot password?" link on the <Link to="/login" className="font-medium text-brand hover:text-brand-hover">login page</Link>.</p>
       </section>
-    </InfoPage>
-  );
-}
-
-export function Privacy() {
-  return (
-    <InfoPage title="Privacy Policy" intro="What we store and why.">
       <section>
-        <h2>Data we store</h2>
-        <p>Your email address, the name you sign up with, your profile status, and the jobs you apply to (title, company, location, salary, link and application stage). This is stored in Google Firebase.</p>
+        <h2>Your data and complaints</h2>
+        <p>For privacy questions, data requests or complaints, email <a href={`mailto:${LEGAL.contactEmail}`}>{LEGAL.contactEmail}</a>. See our <Link to="/privacy">Privacy Policy</Link> for how we handle these.</p>
       </section>
       <section>
-        <h2>How it's used</h2>
-        <p>Only to run your account and show your job tracker. We don't sell your data.</p>
-      </section>
-      <section>
-        <h2>Third parties</h2>
-        <p>Sign-in is handled by Firebase Authentication (including Google and GitHub sign-in). Job listings come from Adzuna; clicking a job takes you to the advertiser's site, which has its own policy.</p>
-      </section>
-      <section>
-        <h2>Deleting your data</h2>
-        <p>You can remove saved jobs at any time from Applied Jobs. To delete your account, contact <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-brand hover:text-brand-hover">{CONTACT_EMAIL}</a>.</p>
-      </section>
-    </InfoPage>
-  );
-}
-
-export function Terms() {
-  return (
-    <InfoPage title="Terms of Use">
-      <section>
-        <h2>Using the service</h2>
-        <p>Job Swipr is provided as-is to help you find and track job applications. Keep your login details safe and don't misuse the service.</p>
-      </section>
-      <section>
-        <h2>Job listings</h2>
-        <p>Listings are supplied by third parties. We don't guarantee they are accurate, current or still open, and applying through Job Swipr doesn't submit an application to the employer. Always complete the application on the employer's site.</p>
+        <h2>Who runs Job Swipr</h2>
+        <p>Job Swipr is an independent project run by {LEGAL.ownerName}, an individual based in {LEGAL.ownerCountry}. It is not a registered company.</p>
       </section>
     </InfoPage>
   );
@@ -90,6 +70,8 @@ const faqs = [
   ["Can I use buttons instead of swiping?", "Yes. Use the Apply and Pass buttons under each card."],
   ["How do I track where I am with an application?", "On Applied Jobs, change each job's stage (Applied, Interviewing, Offer or Rejected) and filter by stage."],
   ["Where do the jobs come from?", "Live UK listings from the Adzuna jobs API."],
+  ["Who can use Job Swipr?", `Anyone in the UK aged ${LEGAL.minimumAge} or over.`],
+  ["How do I get a copy of my data or delete my account?", "Go to your Profile page and use \"Download my data\" or \"Delete my account\"."],
   ["I forgot my password.", "Use the \"Forgot password?\" link on the login page, or Reset Password on your profile."],
 ];
 

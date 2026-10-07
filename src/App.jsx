@@ -7,7 +7,8 @@ import Login from "./pages/login.jsx"
 import Four from "./pages/404.jsx"
 import UserDetails from "./pages/user.jsx"
 import First from "./pages/First/First.jsx"
-import { About, Contact, Privacy, Terms, FAQ } from "./pages/InfoPages.jsx"
+import { About, Contact, FAQ } from "./pages/InfoPages.jsx"
+import { Privacy, Terms, Cookies } from "./pages/LegalPages.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import './index.css'
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path="/contact" element={<Contact/>}/>
               <Route path="/privacy" element={<Privacy/>}/>
               <Route path="/terms" element={<Terms/>}/>
+              <Route path="/cookies" element={<Cookies/>}/>
               <Route path="/faq" element={<FAQ/>}/>
               <Route path="*" element={<Four/>} />
             </Route>

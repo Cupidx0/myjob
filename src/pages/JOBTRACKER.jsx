@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';  // Assuming you're using this hook for
 import { toast } from "react-toastify";
 import { HiOutlineLocationMarker, HiOutlineCalendar, HiOutlineTrash, HiExternalLink, HiOutlineBriefcase } from "react-icons/hi";
 import Spinner from "../components/Spinner.jsx";
+import AdzunaAttribution from "../components/AdzunaAttribution.jsx";
 import '../index.css';
 
 // Application stages; jobs saved before stages existed count as "applied".
@@ -120,6 +121,7 @@ const updateStage = async(jobId, status) => {
                   <span className="flex items-center gap-1.5"><HiOutlineLocationMarker/>{newCard.location}</span>
                   <span className="flex items-center gap-1.5"><HiOutlineCalendar/>Applied {newCard.appliedAt}</span>
                 </p>
+                <AdzunaAttribution/>
                 <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
                   <label className="flex items-center gap-2 text-xs text-muted">
                     Stage

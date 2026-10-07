@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react"; // Need useEffect
 import { toast } from "react-toastify";
-import { signOut, sendPasswordResetEmail } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { HiThumbUp, HiOutlineKey, HiOutlineLogout } from "react-icons/hi";
+import { signOut, sendPasswordResetEmail, deleteUser } from "firebase/auth";
+import { useNavigate, Link } from "react-router-dom";
+import { HiThumbUp, HiOutlineKey, HiOutlineLogout, HiOutlineDownload, HiOutlineTrash } from "react-icons/hi";
 import { useAuth } from "./AuthContext.jsx";
 import { db } from '../utils/firebase.js'; // Or './firebase', be consistent!
-import { doc, getDoc, setDoc } from 'firebase/firestore'; // Need doc, getDoc, setDoc
+import { doc, getDoc, setDoc, getDocs, deleteDoc, collection, query, where } from 'firebase/firestore';
 import { auth } from "../utils/firebase.js"; // Or '../firebase', be consistent!
+
+// Firebase only lets an account be deleted shortly after signing in
+const RECENT_LOGIN_MS = 5 * 60 * 1000;
+
+const appliedJobsQuery = (uid) => query(collection(db, "appliedJobs"), where("userId", "==", uid));
 
 export const UserDetails = () => {
     const [status, setStatus] = useState(''); // State for the input field
@@ -96,6 +101,68 @@ export const UserDetails = () => {
         }
     };
 
+    // Right of access / portability: everything we hold about the user, as JSON
+    const downloadData = async () => {
+        try {
+            const [profileSnap, jobsSnap] = await Promise.all([
+                getDoc(doc(db, "users", user.uid)),
+                getDocs(appliedJobsQuery(user.uid)),
+            ]);
+            const profile = profileSnap.data() || {};
+            if (profile.consent?.acceptedAt?.toDate) {
+                profile.consent = { ...profile.consent, acceptedAt: profile.consent.acceptedAt.toDate().toISOString() };
+            }
+            const data = {
+                exportedAt: new Date().toISOString(),
+                account: {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    signInMethods: user.providerData.map(p => p.providerId),
+                    createdAt: user.metadata.creationTime,
+                    lastSignIn: user.metadata.lastSignInTime,
+                },
+                profile,
+                appliedJobs: jobsSnap.docs.map(d => {
+                    const job = d.data();
+                    return { ...job, appliedAt: job.appliedAt?.toDate ? job.appliedAt.toDate().toISOString() : job.appliedAt };
+                }),
+            };
+            const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "job-swipr-my-data.json";
+            a.click();
+            URL.revokeObjectURL(url);
+        } catch (err) {
+            console.error("Error exporting data:", err);
+            toast.error("Couldn't download your data. Please try again.");
+        }
+    };
+
+    // Right to erasure: saved jobs, profile, then the login itself
+    const deleteAccount = async () => {
+        const lastSignIn = new Date(user.metadata.lastSignInTime).getTime();
+        if (Date.now() - lastSignIn > RECENT_LOGIN_MS) {
+            toast.info("For your security, please log out, sign in again, then delete your account.");
+            return;
+        }
+        if (!window.confirm("Delete your account and all saved jobs? This can't be undone.")) return;
+        try {
+            const jobsSnap = await getDocs(appliedJobsQuery(user.uid));
+            await Promise.all(jobsSnap.docs.map(d => deleteDoc(d.ref)));
+            await deleteDoc(doc(db, "users", user.uid));
+            await deleteUser(auth.currentUser);
+            toast.success("Your account and data have been deleted.");
+            navigate('/home');
+        } catch (err) {
+            console.error("Error deleting account:", err);
+            toast.error(err.code === "auth/requires-recent-login"
+                ? "Please log out, sign in again, then delete your account."
+                : "Couldn't delete your account. Please try again or contact us.");
+        }
+    };
+
     return (
         <>
             <div className="mb-8">
@@ -165,6 +232,25 @@ export const UserDetails = () => {
                         )}
                     </article>
                 </section>
+                {user && (
+                    <section className="glass p-6 md:col-span-2">
+                        <h4 className="text-lg font-semibold text-ink">Your data</h4>
+                        <p className="text-sm text-muted">
+                            Download a copy of everything we hold about you, or permanently delete your account and saved jobs.
+                            See our <Link to="/privacy" className="font-medium text-brand hover:text-brand-hover">Privacy Policy</Link> for your other rights.
+                        </p>
+                        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                            <button className="btn-secondary sm:!w-auto" onClick={downloadData}>
+                                <HiOutlineDownload size={16}/>
+                                Download my data
+                            </button>
+                            <button className="btn-danger" onClick={deleteAccount}>
+                                <HiOutlineTrash size={16}/>
+                                Delete my account
+                            </button>
+                        </div>
+                    </section>
+                )}
             </div>
         </>
     );

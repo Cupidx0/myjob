@@ -5,6 +5,7 @@ import {FaFacebook} from 'react-icons/fa';
 import {FaTwitter} from 'react-icons/fa';
 import {FaInstagram} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { LEGAL } from '../legal/config.js';
 function Footer(){
     const date = new Date().getFullYear();
     const linkClass = "text-muted transition hover:text-ink";
@@ -43,14 +44,16 @@ function Footer(){
                 <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-subtle">Support</p>
                 <ul className="space-y-2 text-sm">
                   <li><Link to="/terms" className={linkClass}>Terms</Link></li>
+                  <li><Link to="/cookies" className={linkClass}>Cookies</Link></li>
                   <li><Link to="/faq" className={linkClass}>FAQ</Link></li>
                   <li><Link to="/signup" className={linkClass}>Sign Up</Link></li>
                 </ul>
             </nav>
         </div>
         {/* Copyright */}
-        <div className="border-t border-line py-5 text-center text-xs text-subtle">
-            &copy; {date} Godwin Ltd. All rights reserved.
+        <div className="space-y-1 border-t border-line px-4 py-5 text-center text-xs text-subtle">
+            <p>&copy; {date} {LEGAL.ownerName}. All rights reserved.</p>
+            <p>Job Swipr is an independent project run by {LEGAL.ownerName}. Job listings by Adzuna.</p>
         </div>
     </footer>
     )

@@ -7,6 +7,9 @@ import { auth, db} from '../utils/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { GoogleIcon } from '../components/customIcons';
 import { FaGithub } from 'react-icons/fa';
+import ConsentChecks from '../components/ConsentChecks.jsx';
+import { recordConsent } from '../legal/consent.js';
+import { LEGAL } from '../legal/config.js';
 import { GoogleAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword,signInWithPopup,updateProfile} from 'firebase/auth';
 export const SignUp =()=>{
     const [firstName, setFirstName] = useState("");
@@ -15,7 +18,18 @@ export const SignUp =()=>{
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [ageOk, setAgeOk] = useState(false);
+    const [termsOk, setTermsOk] = useState(false);
+    const consentGiven = ageOk && termsOk;
     const navigate = useNavigate();
+    // Every sign-up route checks this first, so no account exists without consent
+    const requireConsent = () => {
+      if (consentGiven) return true;
+      const msg = `Please confirm you are ${LEGAL.minimumAge} or older and agree to the Terms.`;
+      setError(msg);
+      toast.error(msg);
+      return false;
+    };
     const handleSignup = async(e)=>{
       e.preventDefault();
       if(!firstName||!lastName||!email||!password||!confirmPassword){
@@ -27,6 +41,7 @@ export const SignUp =()=>{
         toast.error('passwords does not match!');
         return;
       }
+      if(!requireConsent()) return;
       setError("");
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -35,6 +50,7 @@ export const SignUp =()=>{
         try {
           await updateProfile(newUser, { displayName: `${firstName} ${lastName}`.trim() });
           await setDoc(doc(db, "users", newUser.uid), { firstName, lastName, email: newUser.email }, { merge: true });
+          await recordConsent(newUser.uid, "sign-up-email");
         } catch (profileErr) {
           console.error("Error saving profile:", profileErr);
         }
@@ -46,9 +62,11 @@ export const SignUp =()=>{
       }
     };
     const googleUp = async()=>{
+      if(!requireConsent()) return;
       const provider = new GoogleAuthProvider();
       try {
-        await signInWithPopup(auth,provider);
+        const { user: newUser } = await signInWithPopup(auth,provider);
+        await recordConsent(newUser.uid, "sign-up-google");
         toast.success("Signup successful!");
         navigate('/home');
       } catch (err) {
@@ -57,9 +75,11 @@ export const SignUp =()=>{
       }
     };
     const githubUp = async()=>{
+      if(!requireConsent()) return;
       const githubProvider = new GithubAuthProvider();
       try{
-        await signInWithPopup(auth,githubProvider);
+        const { user: newUser } = await signInWithPopup(auth,githubProvider);
+        await recordConsent(newUser.uid, "sign-up-github");
         toast.success("Signup successful!");
         navigate('/home');
       }catch (error) {
@@ -150,11 +170,13 @@ export const SignUp =()=>{
             className="field-input"
           />
         </div>
+        <ConsentChecks ageOk={ageOk} setAgeOk={setAgeOk} termsOk={termsOk} setTermsOk={setTermsOk}/>
         {error && <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p>}
         <div className='space-y-3 pt-2 text-center'>
           <button
             type="submit"
             className="btn-primary"
+            disabled={!consentGiven}
           >
             Sign Up
           </button>
@@ -165,11 +187,13 @@ export const SignUp =()=>{
             type="button"
             onClick={googleUp}
             className="btn-secondary"
+            disabled={!consentGiven}
             ><GoogleIcon className='mr-2'/>Sign In With Google</button>
           <button 
           type="button"
           onClick={githubUp}
           className="btn-secondary"
+          disabled={!consentGiven}
           ><FaGithub size={20}/>Sign In With Github</button>
           <p className="pt-2 text-sm text-center text-muted">
           Already have an account?{' '}

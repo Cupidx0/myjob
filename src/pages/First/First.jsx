@@ -9,6 +9,7 @@ import { collection, doc, getDoc, getDocs, query, setDoc, where, serverTimestamp
 import {jobFetcher} from "../../utils/JobFetcher.js";
 import JobFilterForm from "../JobFilter.jsx";
 import Spinner from "../../components/Spinner.jsx";
+import AdzunaAttribution from "../../components/AdzunaAttribution.jsx";
 import { Link } from "react-router-dom";
 function First() {
   // State to track the touch start position
@@ -172,7 +173,7 @@ function First() {
   };
   const newCard = !loadingMore && cards && cardIndex !== null ? cards[cardIndex]:null;
   const salary = newCard && (newCard.salaryMin || newCard.salaryMax)
-    ? `£${Math.round(newCard.salaryMin || 0).toLocaleString()} – £${Math.round(newCard.salaryMax || newCard.salaryMin || 0).toLocaleString()}`
+    ? `£${Math.round(newCard.salaryMin || 0).toLocaleString()} to £${Math.round(newCard.salaryMax || newCard.salaryMin || 0).toLocaleString()}`
     : 'Not specified';
   const pretty = (value) => value ? value.replace(/_/g, ' ') : 'Not specified';
   return (
@@ -245,6 +246,7 @@ function First() {
                   {cards && <span className="ml-auto rounded-full bg-surface px-2 py-0.5 text-muted">{cardIndex + 1} / {cards.length}</span>}
                 </p>
                 <button className="btn-secondary mt-5" onClick={about}>About job</button>
+                <div className="mt-3 flex justify-end"><AdzunaAttribution/></div>
             </div>
             {showJobInfo&&(
                   <>
