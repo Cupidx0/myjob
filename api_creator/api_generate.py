@@ -22,15 +22,15 @@ def require_key(f):
 
 @app.get("/api/jobs")
 @require_key
-def list_jobs():
-    docs = db.collection("jobs").limit(50).stream()
-    print(f"list_jobs called{len(list(docs))} jobs found")
+def applied_jobs():
+    docs = db.collection("appliedJobs").limit(50).stream()
+    print(f"applied_jobs called{len(list(docs))} jobs found")
     return jsonify([{"id": d.id, **d.to_dict()} for d in docs])
-@app.post("/api/jobs/<jobId>/save")
+@app.post("/api/jobs/<job_id>/save")
 @require_key
-def save_job(jobId):
-    db.collection("appliedJobs").document(jobId).set({"saved": True})
-    print(f"save_job called for job_id: {jobId}")
+def save_job(job_id):
+    db.collection("savedJobs").document(job_id).set({"saved": True})
+    print(f"save_job called for job_id: {job_id}")
     return jsonify({"ok": True}), 201
 g = "test"
 print(f"Starting Flask app on port 5001...{g}")
